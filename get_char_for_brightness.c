@@ -10,7 +10,7 @@ char get_char_for_brightness(int brightness)
     return charset[gary];
 }
 // 输出 32 位色（RGB）格式的字符
-void print_colored_char(int r, int g, int b, char c, FILE *output_file,int iscolor)
+void print_colored_char(int r, int g, int b, char c, FILE *output_file,int iscolor,int iskind)
 {
     // 输出到终端
     if (iscolor != 0)
@@ -19,18 +19,29 @@ void print_colored_char(int r, int g, int b, char c, FILE *output_file,int iscol
     }
     else
     {
-        printf("\033[38;2;%d;%d;%dm%c\033[0m", gary, gary, gary, c);
+        printf("%c", c);
     }
     // 如果 output_file 不为 NULL，输出到文件
     if (output_file != NULL)
     {
-        if(iscolor != 0)
+        if(iscolor == 1)
         {
-            fprintf(output_file, "\033[38;2;%d;%d;%dm%c\033[0m", r, g, b, c);
+            if (iskind == 1)
+            {
+                fprintf(output_file,"style=\"color:rgb(%d,%d,%d)\">%c</span><span", r, g, b, c);
+            }
+            else
+            {
+                fprintf(output_file, "\033[38;2;%d;%d;%dm%c\033[0m", r, g, b, c);
+            }
         }
         else
         {
             fprintf(output_file, "%c", c);
+            if (iskind == 1)
+            {
+                fprintf(output_file,"p>%c</p><",c);
+            }
         }
     }
 }

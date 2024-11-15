@@ -3,6 +3,7 @@
 #include <string.h>
 #include "functions.h"
 
+int iskind = 0;
 char output_filename[256];
 int iscolor = 0;
 int scale_factor = 2;
@@ -31,12 +32,16 @@ int main(int argc,char **argv)
         if (check_if_png(file_path, &fp))
         {
             read_png(fp);
-            generate_ascii_art(scale_factor,h,w,row_pointers,NULL,iscolor);
+            generate_ascii_art(scale_factor,h,w,row_pointers,NULL,iscolor,0);
             if(argv[4]!=NULL)
             {
+            if(argv[5]!=NULL)
+            {
+                iskind=atoi(argv[5]);
+            }
                 strcpy(output_filename, argv[4]);
                 output_file = fopen(output_filename,"w+");
-                generate_ascii_art(scale_factor,h,w,row_pointers,output_file,iscolor);
+                generate_ascii_art(scale_factor,h,w,row_pointers,output_file,iscolor,iskind);
                 fclose(output_file);
             }
         fclose(fp);
@@ -63,6 +68,11 @@ int main(int argc,char **argv)
         scanf("%d",&iscolor);
         getchar();
         
+        printf("If U want to save as html,please enter 1:");
+
+        scanf("%d",&iskind);
+        getchar();
+        
         printf("If U want to save as a file,please enter the file name:");
         fgets(output_filename,sizeof(output_filename), stdin);
         
@@ -70,12 +80,12 @@ int main(int argc,char **argv)
         if (strlen(output_filename)>0)
         {
             output_file = fopen(output_filename,"w+");
-            generate_ascii_art(scale_factor,h,w,row_pointers,output_file,iscolor);
+            generate_ascii_art(scale_factor,h,w,row_pointers,output_file,iscolor,iskind);
             fclose(output_file);
         }
         else
         {
-        generate_ascii_art(scale_factor,h,w,row_pointers,NULL,iscolor);
+        generate_ascii_art(scale_factor,h,w,row_pointers,NULL,iscolor,0);
         }
     }
     else
