@@ -9,10 +9,10 @@ void generate_ascii_art(int scale_factor, int h, int w, unsigned char **row_poin
     {
         fprintf(output_file,"<span ");
     }
-    if (iskind == 1)
-    {
-        fprintf(output_file,"<p ");
-    }
+    //else
+    //{
+    //    fprintf(output_file,"<p ");
+    //}
     for (int y = 0; y < h; y++)
     {  // Loop through rows (height)
         if (y % scale_factor != 0)

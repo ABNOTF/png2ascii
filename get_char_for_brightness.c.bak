@@ -39,7 +39,7 @@ void print_colored_char(int r, int g, int b, char c, FILE *output_file,int iscol
         {
             if (iskind == 1)
             {
-                fprintf(output_file,">%c</p><p",c);
+                fprintf(output_file,">%c</p><",c);
             }
             else
             {
