@@ -42,6 +42,10 @@ int main(int argc,char **argv)
         fclose(fp);
         return(0);
         }
+        else
+        {
+        return(0);
+        }
     }
     printf("Enter PNG file path: ");
     scanf("%s", file_path);  // Read file path
