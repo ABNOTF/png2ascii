@@ -21,6 +21,15 @@ void generate_ascii_art(int scale_factor, int h, int w, unsigned char **row_poin
             int brightness = (r + g + b) / 3;
             char c = get_char_for_brightness(brightness);
             print_colored_char(r, g, b, c,output_file,iscolor);
+            printf(" ");
+            if (output_file != NULL)
+            {
+                fprintf(output_file," ");
+            }
+        }
+        if (output_file != NULL)
+        {
+            fprintf(output_file, "\n");
         }
         printf("\n");  // Print a new line after each row
     }

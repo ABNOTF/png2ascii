@@ -3,13 +3,15 @@
 
 int gary;
 
-char get_char_for_brightness(int brightness) {
+char get_char_for_brightness(int brightness)
+{
     const char *charset = " .:-=+*#%@";  // 字符集
-    int gary = brightness * 9 / 255;     // 将亮度映射到字符集的索引
+    int gary = 9 - (brightness * 9 / 255);     // 将亮度映射到字符集的索引
     return charset[gary];
 }
 // 输出 32 位色（RGB）格式的字符
-void print_colored_char(int r, int g, int b, char c, FILE *output_file,int iscolor) {
+void print_colored_char(int r, int g, int b, char c, FILE *output_file,int iscolor)
+{
     // 输出到终端
     if (iscolor != 0)
     {
