@@ -5,11 +5,11 @@
 
 void generate_ascii_art(int scale_factor, int h, int w, unsigned char **row_pointers,FILE *output_file,int iscolor,int iskind)
 {
-    if (iskind == 1 && iscolor ==1)
+    if (iskind == 1 && iscolor == 1)
     {
         fprintf(output_file,"<span ");
     }
-    if (iskind == 1)
+    if (iskind == 1 && iscolor !=1)
     {
         fprintf(output_file,"<p ");
     }
