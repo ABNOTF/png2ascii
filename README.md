@@ -1,13 +1,22 @@
 # png2ascii
 A simple program that can let your png picture to ascii draw in black or colors by C
 
-You need to install libpng to enable compile sucess
+需要安装libpng库以确保编译成功
+---
+## 用以下指令编译
 
-You can compile it by this command
--
-##gcc *.c -lpng -o p2a
+- gcc *.c -lpng -o p2a
 
-Method of use
--
-##/p2a(.exe) [filepath] [scale(int)] [color(enter 1 if you want have color)] [output file name (optional)]
+## 用法
+
+./p2a 文件目录 精细程度(int) 色彩(1/0)
+文件名称(没有则不生成) 是否输出为html格式(1/0)
+
+## 目前进度
+- [x] 实现png转换为ascii字符并可调节色彩精细程度，可输出至文件中
+  - [X] 实现输出为html格式
+- [ ] gif转ascii
+- [ ] 视频转ascii
+- [ ] gui界面
+- [ ] 重写部分屎代码
 
