@@ -29,7 +29,10 @@ int main(int argc,char **argv)
         if(argv[3]!=NULL)
         {
             iscolor = atoi(argv[3]);
+            if (iscolor == 1)
+            {
             pixel_size = atoi(argv[4]);
+            }
         }
         if (check_if_png(file_path, &fp))
         {

@@ -3,7 +3,7 @@
 #include <png.h>
 #include "functions.h"
 
-void generate_ascii_art(int scale_factor, int h, int w, unsigned char **row_pointers,FILE *output_file,int iscolor,int iskind)
+void generate_ascii_art(int scale_factor, int h, int w, unsigned char **row_pointers,FILE *output_file,int iscolor,int iskind,int pixel_size)
 {
     if (iskind == 1 && iscolor == 1)
     {
@@ -27,7 +27,7 @@ void generate_ascii_art(int scale_factor, int h, int w, unsigned char **row_poin
                 continue;  // Skip columns that don't match the scale factor
             }
 
-            png_byte *pixel = &row_pointers[y][x * 3];  // Get the RGB values for each pixel
+            png_byte *pixel = &row_pointers[y][x * pixel_size];  // Get the RGB values for each pixel
             int r = pixel[0];
             int g = pixel[1];
             int b = pixel[2];
