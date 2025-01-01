@@ -2,106 +2,58 @@
 #include <stdlib.h>
 #include <string.h>
 #include "functions.h"
+#include <fcntl.h>
+#include <io.h>
+#include <windows.h>
 
+int ac;
 int iskind = 0;
-char output_filename[256];
 int iscolor = 0;
 int scale_factor = 2;
 FILE *fp = NULL;
 int w = 0, h = 0;
-char file_path[256] = {0};
 int pixel_size = 3;
-//char *file_name = NULL;
 png_structp png_ptr = NULL;
 png_infop info_ptr = NULL;
 png_bytep *row_pointers = NULL;
+
+
 FILE *output_file;
 
-int main(int argc,char **argv)
+int main(int argc,char* argv[])
 {
-    if(argv[1]!=NULL)
+    if (argc < 1)
     {
-        strcpy(file_path,argv[1]);
-            if(argv[2]!=NULL)
+        printf("Please enter valid parameters.");
+        exit(0);
+    }
+    check_if_png(argv[1],&fp);
+    read_png(fp);
+    for (ac = 2; ac < argc && argv[ac][0] == '-'; ac++)
+    {
+        switch (argv[ac][1])
         {
-            scale_factor = atoi(argv[2]);
-        }
-        if(argv[3]!=NULL)
-        {
-            iscolor = atoi(argv[3]);
-            pixel_size = atoi(argv[4]);
-        }
-        if (check_if_png(file_path, &fp))
-        {
-            read_png(fp);
-            generate_ascii_art(scale_factor,h,w,row_pointers,NULL,iscolor,0,pixel_size);
-            if(argv[5]!=NULL)
-            {
-            if(argv[6]!=NULL)
-            {
-                iskind=atoi(argv[6]);
-            }
-                strcpy(output_filename, argv[5]);
-                output_file = fopen(output_filename,"w+");
-                generate_ascii_art(scale_factor,h,w,row_pointers,output_file,iscolor,iskind,pixel_size);
-                fclose(output_file);
-            }
-        fclose(fp);
-        return(0);
+        case 's':
+            scale_factor = atoi(argv[ac+1]);
+            ac++;
+            break;
+
+        case 'c':
+            iscolor = 1;
+            break;
+
+        case 'h':
+            iskind = 1;
+            break;
+
+        case 'p':
+            pixel_size = atoi(argv[ac+1]);
+            ac++;
+            break;
         }
     }
-    printf("Enter PNG file path: ");
-    scanf("%s", file_path);  // Read file path
-    // Check if it's a PNG file
-    if (check_if_png(file_path, &fp))
-    {
-        printf("This is a valid PNG file.\n");
 
-        // Read the PNG file
-        read_png(fp);
-
-        printf("The height is: %d, The width is: %d\nThe rows is: %p\n", h, w,row_pointers);
-		printf("%s", "Input scale factor:");
-		
-		scanf("%d", &scale_factor);
-		
-        printf("If U want to have color,please enter 1:");
-
-        scanf("%d",&iscolor);
-        getchar();
-        
-        if (iscolor == 1)
-        {
-        printf("Choice yours color pixel_size:");
-        scanf("%d",&pixel_size);
-        getchar();
-        }
-        
-        printf("If U want to save as html,please enter 1:");
-
-        scanf("%d",&iskind);
-        getchar();
-        
-        printf("If U want to save as a file,please enter the file name:");
-        fgets(output_filename,sizeof(output_filename), stdin);
-        
-        output_filename[strlen(output_filename) - 1] = '\0';
-        if (strlen(output_filename)>0)
-        {
-            output_file = fopen(output_filename,"w+");
-            generate_ascii_art(scale_factor,h,w,row_pointers,output_file,iscolor,iskind,pixel_size);
-            fclose(output_file);
-        }
-        else
-        {
-        generate_ascii_art(scale_factor,h,w,row_pointers,NULL,iscolor,0,pixel_size);
-        }
-    }
-    else
-    {
-        printf("Not a valid PNG file.\n");
-    }
-
-    fclose(fp);  // Close the file when done
-    return 0;
+    output_file = fopen(argv[ac],"wb");
+    _setmode(_fileno(stdout), _O_U8TEXT);
+    generate_ascii_art(scale_factor,h,w,row_pointers,iscolor,iskind,pixel_size,output_file);
 }
