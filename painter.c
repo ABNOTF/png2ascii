@@ -7,7 +7,6 @@
 wchar_t get_char_for_brightness(int brightness,int iscolor)
 {
     int gary;
-    // const wchar_t charset[] = L"电棍操死你们的妈";
     const wchar_t charset[] = L"░▒▒▓▓███";
     switch (iscolor)
     {
